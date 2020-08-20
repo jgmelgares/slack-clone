@@ -1,15 +1,23 @@
 import React from "react";
-import firebase from '../../firebase';
+import firebase from "../../firebase";
 
 import { Grid, Header, Icon, Dropdown } from "semantic-ui-react";
 
 class UserPanel extends React.Component {
+  state = {
+    user: this.props.currentUser,
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ user: nextProps.currentUser });
+  }
+
   dropdownOptions = () => [
     {
       key: "user",
       text: (
         <span>
-          Signed in as <strong>User</strong>
+          Signed in as <strong>{this.state.user.displayName}</strong>
         </span>
       ),
       disabled: true,
@@ -25,10 +33,10 @@ class UserPanel extends React.Component {
   ];
 
   handleSignout = () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => console.log('signed out'));
+    firebase
+      .auth()
+      .signOut()
+      .then(() => console.log("signed out"));
   };
 
   render() {
@@ -45,7 +53,7 @@ class UserPanel extends React.Component {
           {/* User dropdown */}
           <Header style={{ padding: "0.25em" }} as="h4" inverted>
             <Dropdown
-              trigger={<span>User</span>}
+              trigger={<span>{this.state.user.displayName}</span>}
               options={this.dropdownOptions()}
             />
           </Header>
