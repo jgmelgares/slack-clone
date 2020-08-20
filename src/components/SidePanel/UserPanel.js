@@ -8,10 +8,6 @@ class UserPanel extends React.Component {
     user: this.props.currentUser,
   };
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ user: nextProps.currentUser });
-  }
-
   dropdownOptions = () => [
     {
       key: "user",
