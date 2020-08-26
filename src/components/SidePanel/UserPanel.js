@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 import AvatarEditor from "react-avatar-editor";
 
 // prettier-ignore
-import { Grid, Header, Icon, Dropdown, Image, Modal, Input, Button, } from "semantic-ui-react";
+import { Grid, Header, Icon, Dropdown, Image, Modal, Input, Button } from "semantic-ui-react";
 
 class UserPanel extends React.Component {
   state = {
@@ -11,7 +11,7 @@ class UserPanel extends React.Component {
     modal: false,
     previewImage: "",
     croppedImage: "",
-    blob: "",
+    blob: null,
     uploadedCroppedImage: "",
     storageRef: firebase.storage().ref(),
     userRef: firebase.auth().currentUser,
@@ -80,7 +80,7 @@ class UserPanel extends React.Component {
     const { storageRef, userRef, blob, metadata } = this.state;
 
     storageRef
-      .child(`avatar/user-${userRef.uid}`)
+      .child(`avatars/user-${userRef.uid}`)
       .put(blob, metadata)
       .then((snap) => {
         snap.ref.getDownloadURL().then((downloadURL) => {
